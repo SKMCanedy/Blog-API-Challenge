@@ -17,17 +17,16 @@ router.get('/', function(req, res){
 });
 
 router.post('/', jsonParser, function(req, res){
-	const newPost = BlogPosts.create(req.body.title, req.body.content, req.body.author, req.body.publishDate);
+	const newPost = BlogPosts.create(req.body.title, req.body.content, req.body.author);
 	res.status(201).json(newPost);
 });
 
-router.put('/:id', function(req, res){
+router.put('/:id', jsonParser, function(req, res){
 	const updatedPost = BlogPosts.update({
 		id: req.params.id, 
 		title: req.body.title, 
 		content: req.body.content, 
 		author: req.body.author, 
-		publishDate: req.body.publishDate
 	});
 	res.status(204).end();
 });
@@ -36,3 +35,5 @@ router.delete('/:id', function(req, res){
 	BlogPosts.delete(req.params.id);
 	res.status(204).end();
 });
+
+module.exports = router;
